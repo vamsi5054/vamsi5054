@@ -17,3 +17,19 @@ y=data['target_column']
 x_train,x_test,y_tarin.y_test=train_test_split(x,y,test size=0.2,random_state
 scaler=standardscaler()
 x_train_scaled=scaler.fit_transform(x_train)
+x_test_scaled=scaler.transform(x_test)
+ir_model=linearregression()
+ir_model.fit(x_train_scaled,y_train)
+y_pred=ir_model.predict(x_test_scaled)
+mse=mean_squared_error(y_test,y_pred)
+print(f'mean squared error:{mse}')
+model=keras.sequential([
+layers.dense(64,activation='relu',
+input_shape=(x_train_scaled.shape[1],)),
+layers.dense(1)
+])
+model.compile(optimizer='adam',
+loss='mean_sqared_error')
+model.fit(x_trained_scaled,y_train,epochs=10,batch_size=32,validation_split=0.2)
+nn_mse=model.evaluate(x_test_scaled,y_test)
+print(f'neural network mean squared error:{nn_mse}')
